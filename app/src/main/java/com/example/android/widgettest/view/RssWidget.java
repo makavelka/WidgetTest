@@ -24,18 +24,25 @@ public class RssWidget extends AppWidgetProvider implements WidgetActions {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        switch (intent.getAction()) {
-            case Const.WIDGET_CONF:
-                return;
-            case Const.WIDGET_LEFT:
-                onPrevPressed();
-                break;
-            case Const.WIDGET_RIGHT:
-                onNextPressed();
-                break;
+        String message = intent.getStringExtra(Const.BROADCAST_ACTION);
+        if (message != null) {
+            switch (message) {
+                case Const.WIDGET_CONF:
+                    return;
+                case Const.WIDGET_LEFT:
+                    onPrevPressed();
+                    updateData(context);
+                    break;
+                case Const.WIDGET_RIGHT:
+                    onNextPressed();
+                    updateData(context);
+                    break;
+            }
         }
-        mRssItems = (ArrayList<RssItem>) intent.getSerializableExtra(Const.RSS_ITEMS_TAG);
-        updateData(context);
+        if (intent.getSerializableExtra(Const.RSS_ITEMS_TAG) != null) {
+            mRssItems = (ArrayList<RssItem>) intent.getSerializableExtra(Const.RSS_ITEMS_TAG);
+        }
+
     }
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
@@ -80,6 +87,9 @@ public class RssWidget extends AppWidgetProvider implements WidgetActions {
 
         // Update the widgets via the service
         context.startService(intent);
+        for (int i : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, i);
+        }
 
     }
 
@@ -98,10 +108,11 @@ public class RssWidget extends AppWidgetProvider implements WidgetActions {
         if (mRssItems == null) {
             return;
         }
-        if (mCurrent == 0) {
+
+        if (mCurrent == mRssItems.size() - 1) {
             return;
         }
-        mCurrent++;
+        mCurrent = mCurrent + 1;
     }
 
     @Override
@@ -109,7 +120,7 @@ public class RssWidget extends AppWidgetProvider implements WidgetActions {
         if (mRssItems == null) {
             return;
         }
-        if (mCurrent == mRssItems.size() - 1) {
+        if (mCurrent == 0) {
             return;
         }
         mCurrent--;

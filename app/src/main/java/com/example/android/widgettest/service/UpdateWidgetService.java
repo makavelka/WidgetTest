@@ -9,6 +9,7 @@ import android.widget.RemoteViews;
 
 import com.example.android.widgettest.Const;
 import com.example.android.widgettest.R;
+import com.example.android.widgettest.view.RssWidget;
 
 public class UpdateWidgetService extends Service {
 
@@ -23,18 +24,24 @@ public class UpdateWidgetService extends Service {
             RemoteViews views = new RemoteViews(this
                     .getApplicationContext().getPackageName(),
                     R.layout.rss_widget);
-            Intent intent1 = new Intent(Const.WIDGET_LEFT);
+            Intent intent1 = new Intent(this.getApplicationContext(),
+                    RssWidget.class);
+            intent1.putExtra(Const.BROADCAST_ACTION, Const.WIDGET_LEFT);
             intent1.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
             views.setOnClickPendingIntent(R.id.prev_imageButton_rssWidget, pendingIntent);
 
-            Intent intent2 = new Intent(Const.WIDGET_RIGHT);
+            Intent intent2 = new Intent(this.getApplicationContext(),
+                    RssWidget.class);
             intent2.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            intent2.putExtra(Const.BROADCAST_ACTION, Const.WIDGET_RIGHT);
             PendingIntent pendingIntentl = PendingIntent.getBroadcast(this, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
             views.setOnClickPendingIntent(R.id.next_imageButton_rssWidget, pendingIntentl);
 
-            Intent intent3 = new Intent(Const.WIDGET_RIGHT);
+            Intent intent3 = new Intent(this.getApplicationContext(),
+                    RssWidget.class);
             intent3.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            intent3.putExtra(Const.BROADCAST_ACTION, Const.WIDGET_RIGHT);
             PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent3, PendingIntent.FLAG_UPDATE_CURRENT);
             views.setOnClickPendingIntent(R.id.conf_imageButton_rssWidget, pendingIntent2);
 

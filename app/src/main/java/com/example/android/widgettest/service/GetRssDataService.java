@@ -110,7 +110,7 @@ public class GetRssDataService extends IntentService {
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
             this.sendBroadcast(intent);
         }
-        setAlarm(this);
+//        setAlarm(this);
     }
 
     public void setAlarm(Context context) {
