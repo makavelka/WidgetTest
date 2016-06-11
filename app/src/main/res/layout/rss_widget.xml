@@ -16,11 +16,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_marginTop="16dp"
-            android:maxLines="1"
+            android:gravity="center_horizontal"
             android:textColor="@color/colorAccent"
-            android:textSize="16sp"
+            android:textSize="12sp"
             tools:text="Title"
             android:contentDescription="@string/appwidget_text"/>
 
@@ -30,19 +30,18 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_textView_rssWidget"
             android:layout_centerHorizontal="true"
-            android:maxLines="2"
+            android:gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:textColor="@color/colorAccent"
-            android:textSize="12sp"
+            android:textSize="8sp"
             tools:text="Description" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dest_textView_rssWidget"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp">
-
 
             <ImageButton
                 style="@style/Base.Widget.AppCompat.Button.Borderless"

@@ -3,8 +3,7 @@
     android:initialKeyguardLayout="@layout/rss_widget"
     android:widgetCategory="keyguard|home_screen"
     android:initialLayout="@layout/rss_widget"
-    android:minHeight="110dp"
+    android:minHeight="180dp"
     android:minWidth="180dp"
-    android:previewImage="@drawable/example_appwidget_preview"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="60000"></appwidget-provider>

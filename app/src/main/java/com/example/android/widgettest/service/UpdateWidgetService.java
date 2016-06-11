@@ -13,6 +13,7 @@ import com.example.android.widgettest.view.RssWidget;
 
 public class UpdateWidgetService extends Service {
 
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         AppWidgetManager mWidgetManager = AppWidgetManager.getInstance(this.getApplicationContext());
@@ -21,31 +22,23 @@ public class UpdateWidgetService extends Service {
                 .getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
 
         for (int widgetId : allWidgetIds) {
-            RemoteViews views = new RemoteViews(this
-                    .getApplicationContext().getPackageName(),
-                    R.layout.rss_widget);
-            Intent intent1 = new Intent(this.getApplicationContext(),
-                    RssWidget.class);
-            intent1.putExtra(Const.BROADCAST_ACTION, Const.WIDGET_LEFT);
-            intent1.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
-            views.setOnClickPendingIntent(R.id.prev_imageButton_rssWidget, pendingIntent);
+            RemoteViews remoteViews = new RemoteViews(this.getPackageName(), R.layout.rss_widget);
+            Intent active = new Intent(this, RssWidget.class);
+            active.setAction(Const.ACTION_WIDGET_CONF);
+            PendingIntent actionPendingIntent = PendingIntent.getBroadcast(this, 0, active, 0);
+            remoteViews.setOnClickPendingIntent(R.id.conf_imageButton_rssWidget, actionPendingIntent);
 
-            Intent intent2 = new Intent(this.getApplicationContext(),
-                    RssWidget.class);
-            intent2.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            intent2.putExtra(Const.BROADCAST_ACTION, Const.WIDGET_RIGHT);
-            PendingIntent pendingIntentl = PendingIntent.getBroadcast(this, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
-            views.setOnClickPendingIntent(R.id.next_imageButton_rssWidget, pendingIntentl);
+            active = new Intent(this, RssWidget.class);
+            active.setAction(Const.ACTION_WIDGET_PREV);
+            actionPendingIntent = PendingIntent.getBroadcast(this, 0, active, 0);
+            remoteViews.setOnClickPendingIntent(R.id.prev_imageButton_rssWidget, actionPendingIntent);
 
-            Intent intent3 = new Intent(this.getApplicationContext(),
-                    RssWidget.class);
-            intent3.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            intent3.putExtra(Const.BROADCAST_ACTION, Const.WIDGET_RIGHT);
-            PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 0, intent3, PendingIntent.FLAG_UPDATE_CURRENT);
-            views.setOnClickPendingIntent(R.id.conf_imageButton_rssWidget, pendingIntent2);
+            active = new Intent(this, RssWidget.class);
+            active.setAction(Const.ACTION_WIDGET_NEXT);
+            actionPendingIntent = PendingIntent.getBroadcast(this, 0, active, 0);
+            remoteViews.setOnClickPendingIntent(R.id.next_imageButton_rssWidget, actionPendingIntent);
 
-            mWidgetManager.updateAppWidget(widgetId, views);
+            mWidgetManager.updateAppWidget(widgetId, remoteViews);
         }
         stopSelf();
         return super.onStartCommand(intent, flags, startId);

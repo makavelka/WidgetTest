@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.android.widgettest.Const;
+import com.example.android.widgettest.PrefsUtils;
 import com.example.android.widgettest.model.RssItem;
 import com.example.android.widgettest.receiver.AlarmReceiver;
 import com.example.android.widgettest.view.RssWidget;
@@ -41,7 +42,7 @@ public class GetRssDataService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        getRssItems(intent.getStringExtra(Const.URL_TAG));
+        getRssItems(PrefsUtils.getUrl(this));
     }
 
     public GetRssDataService() {
@@ -110,7 +111,7 @@ public class GetRssDataService extends IntentService {
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
             this.sendBroadcast(intent);
         }
-//        setAlarm(this);
+        setAlarm(this);
     }
 
     public void setAlarm(Context context) {

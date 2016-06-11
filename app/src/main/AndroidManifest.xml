@@ -3,6 +3,7 @@
     package="com.example.android.widgettest">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:allowBackup="true"
@@ -27,12 +28,17 @@
         <receiver android:name=".view.RssWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.android.widgettest.Const.ACTION_WIDGET_CONF"/>
+                <action android:name="com.example.android.widgettest.Const.ACTION_WIDGET_NEXT"/>
+                <action android:name="com.example.android.widgettest.Const.ACTION_WIDGET_PREV"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/rss_widget_info" />
         </receiver>
+
+        <receiver android:name=".receiver.AlarmReceiver"/>
     </application>
 
 </manifest>

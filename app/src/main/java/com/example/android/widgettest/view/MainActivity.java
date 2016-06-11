@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.android.widgettest.Const;
 import com.example.android.widgettest.PrefsUtils;
 import com.example.android.widgettest.R;
 import com.example.android.widgettest.service.GetRssDataService;
@@ -25,9 +24,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, GetRssDataService.class);
-                intent.putExtra(Const.URL_TAG, editText.getText().toString());
-                startService(intent);
                 PrefsUtils.saveUrl(editText.getText().toString(), MainActivity.this);
+                startService(intent);
                 finish();
             }
         });
